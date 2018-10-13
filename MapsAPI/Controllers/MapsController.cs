@@ -24,6 +24,8 @@ namespace MapsAPI.Controllers
             var result = await response.Content.ReadAsStringAsync();
             // add this code
             var maps = JsonConvert.DeserializeObject<Maps>(result);
+            //var resultObj = await response.Content.ReadAsAsync<Maps>();
+
             return Ok(result);
         }
     }
