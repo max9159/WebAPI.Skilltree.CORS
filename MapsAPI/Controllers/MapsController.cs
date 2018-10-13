@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using MapsAPI.Models;
+using Newtonsoft.Json;
 
 namespace MapsAPI.Controllers
 {
@@ -15,10 +17,13 @@ namespace MapsAPI.Controllers
         private static string gMapKey = "&key=AIzaSyBd0HRR1RLqpk934ErdeywXszgm6hGw8eU";
         public async Task<IHttpActionResult> Get()
         {
-            string addressUri = mapUri + "台北市大安區金華街199巷5號";
+            string addressUri = mapUri + "台北市大安區金華街199巷5號" + gMapKey;
             var response = await client.GetAsync(addressUri);
             response.EnsureSuccessStatusCode();
+            //var result = await response.Content.ReadAsStringAsync();
             var result = await response.Content.ReadAsStringAsync();
+            // add this code
+            var maps = JsonConvert.DeserializeObject<Maps>(result);
             return Ok(result);
         }
     }
